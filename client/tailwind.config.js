@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Poppins: ['Poppins', 'sans-serif'], // Add your custom font name here
+      },
+      boxShadow: {
+        'custom': 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;',
+      },
+    },
   },
   plugins: [],
 }
