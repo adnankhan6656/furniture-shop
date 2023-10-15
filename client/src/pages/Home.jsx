@@ -37,17 +37,16 @@ export default function Home() {
 
 
 
-    <button className=' flex items-center gap-3 text-white text-2xl sm:hidden' onClick={handlesidebar}>
-    
-    <button type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center  text-white  focus:ring-4 focus:outline-none">
-    <button className='text-2xl'> 
+    <div className=' flex items-center gap-3 text-white text-2xl sm:hidden '>
+    <button type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center  text-white focus:outline-none">
+    <button className='text-2xl focus:outline-none'> 
     <AiOutlineShoppingCart/>
     </button>
   <span class="sr-only">Notifications</span>
   <div class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-black bg-[#edb932] border-2  rounded-full -top-2 -right-2 dark:border-gray-900">6</div>
 </button>
-<RxHamburgerMenu/>
-    </button>
+<RxHamburgerMenu  onClick={handlesidebar} className=' focus:outline-none'/>
+    </div>
   
   
     {/* For Desktop navigation */}
