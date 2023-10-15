@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate ,Link} from 'react-router-dom';
+import OAuth from "../components/OAuth.jsx"
 
 export default function Signup() {
   const [formData, setFormData] = useState({});
@@ -40,13 +41,14 @@ export default function Signup() {
     }
   };
   return (
-    <div className="max-w-lg font-Poppins mx-auto bg-white sm:shadow-custom  mt-6 p-3 sm:p-6 rounded-lg">
+    <div className="max-w-lg font-Poppins mx-auto bg-white sm:shadow-custom  mt-6 p-3 sm:p-8 rounded-lg">
       <h1 className="text-3xl text-center font-semibold">Signup</h1>
        <form  onSubmit={handleSubmit} className="flex flex-col gap-5 my-5">
         <input type="text" placeholder="username" className="p-2 border-gray-300 border-b-[1px] outline-none" id="username" onChange={handleChange} />
         <input type="email" placeholder="email" className="p-2 border-b-[1px] outline-none" id="email" onChange={handleChange} />
         <input type="password" placeholder="password" className="p-2 border-b-[1px] outline-none" id="password" onChange={handleChange} />
-        <button disabled={loading} className="bg-[#EDB932]  mt-2 rounded-md p-2">Signup</button>
+        <button disabled={loading} className="bg-[#EDB932]  text-black uppercase mt-2 rounded-md p-2">Signup</button>
+        <OAuth/>
        </form>
        <div className="flex gap-2">
        <p>Have an account?</p>
