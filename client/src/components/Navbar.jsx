@@ -3,8 +3,10 @@ import {AiOutlineClose} from "react-icons/ai"
 import {RxHamburgerMenu} from "react-icons/rx"
 import {AiOutlineShoppingCart} from "react-icons/ai";
 import {NavLink} from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 export default function Navbar() {
+  const { currentUser } = useSelector((state) => state.user);
     const [isvisible,setIsvisible]=useState(false);
  const handlesidebar=()=>{
          setIsvisible(!isvisible);
@@ -26,8 +28,15 @@ export default function Navbar() {
               <li className="text-md text-black mt-11 border-b-[1px] p-3 w-full">Home</li>
               <li className="text-md  text-black border-b-[1px] p-3 w-full">Products</li>
              
-              <li className="text-md p-3 text-black w-full">
-              <NavLink to="/sign-in" >Login</NavLink>
+              <li className="text-md  text-black w-full">
+              <NavLink to="/sign-in" >
+              {currentUser ? (
+                <li className="text-md  text-black  p-3 w-full">Profile</li>
+                
+            ) : (
+              <li className=' text-slate-700 hover:underline'>Login</li>
+            )}
+              </NavLink>
               </li>
             
 
@@ -54,9 +63,14 @@ export default function Navbar() {
 
        <li className="text-md cursor-pointer">Home</li>
               <li className="text-md cursor-pointer">Products</li>
-              <NavLink to="/sign-in">
-              <li className="text-md cursor-pointer">Login</li>
-              </NavLink>
+          
+              <NavLink to='/profile'>
+            {currentUser ? (
+              <img className='rounded-full h-7 w-7 object-cover' src={currentUser.avatar} alt='profile' />
+            ) : (
+              <li className=' text-slate-700 hover:underline'> Sign in</li>
+            )}
+          </NavLink>
 
               <li>
                 
