@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {AiOutlineClose} from "react-icons/ai"
 import {RxHamburgerMenu} from "react-icons/rx"
 import {AiOutlineShoppingCart} from "react-icons/ai";
+import {NavLink} from "react-router-dom";
 
 export default function Navbar() {
     const [isvisible,setIsvisible]=useState(false);
@@ -24,7 +25,10 @@ export default function Navbar() {
                 </button>
               <li className="text-md text-black mt-11 border-b-[1px] p-3 w-full">Home</li>
               <li className="text-md  text-black border-b-[1px] p-3 w-full">Products</li>
+              <NavLink>
               <li className="text-md p-3 text-black w-full">Login</li>
+              </NavLink>
+
             </ul>
           )}     
     
@@ -48,7 +52,10 @@ export default function Navbar() {
 
        <li className="text-md cursor-pointer">Home</li>
               <li className="text-md cursor-pointer">Products</li>
+              <NavLink to="/sign-in">
               <li className="text-md cursor-pointer">Login</li>
+              </NavLink>
+
               <li>
                 
 <button type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center  text-white  focus:ring-4 focus:outline-none">

@@ -3,7 +3,7 @@ import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
-
+import {BiLogoGoogle} from "react-icons/bi";
 export default function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,12 +33,11 @@ export default function OAuth() {
     }
   };
   return (
-    <button
-      onClick={handleGoogleClick}
-      type='button'
-      className='bg-[#3498db] text-white p-2 rounded-lg uppercase hover:opacity-95'
-    >
-      Continue with google
-    </button>
+    <button onClick={handleGoogleClick} type='button' className=' text-black flex items-center bg-blue-700 gap-3 rounded-lg uppercase hover:opacity-95 p-3 shadow-md font-semibold' >
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" className='bg-white p-1' alt="Google Icon" />
+      <p className='ml-3 text-white '> Continue with google</p> 
+       </button>
+
+    
   );
 }
