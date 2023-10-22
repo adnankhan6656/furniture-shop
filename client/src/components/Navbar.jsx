@@ -25,9 +25,11 @@ export default function Navbar() {
                 </button>
               <li className="text-md text-black mt-11 border-b-[1px] p-3 w-full">Home</li>
               <li className="text-md  text-black border-b-[1px] p-3 w-full">Products</li>
-              <NavLink>
-              <li className="text-md p-3 text-black w-full">Login</li>
-              </NavLink>
+             
+              <li className="text-md p-3 text-black w-full">
+              <NavLink to="/sign-in" >Login</NavLink>
+              </li>
+            
 
             </ul>
           )}     

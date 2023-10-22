@@ -52,7 +52,7 @@ export default function Signup() {
         
         <input type="email" placeholder="email" className="p-2 border-b-[1px] outline-none" id="email" onChange={handleChange} />
         <input type="password" placeholder="password" className="p-2 border-b-[1px] outline-none" id="password" onChange={handleChange} />
-        <button disabled={loading} className="bg-[#EDB932] text-black font-semibold  uppercase mt-2 rounded-md p-3 tracking-wider"> {loading ? 'Loading...' : 'Sign In'}</button>
+        <button disabled={loading} className="bg-[#EDB932] text-black  font-medium  uppercase mt-2 rounded-md p-3 tracking-wider"> {loading ? 'Loading...' : 'Sign In'}</button>
         <OAuth/>
        </form>
        <div className="flex gap-2">
