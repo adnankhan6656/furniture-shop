@@ -6,10 +6,11 @@ import {
   signInStart,
   signInSuccess,
   signInFailure,
+  setAccesstoken
 } from '../redux/user/userSlice';
 import OAuth from "../components/OAuth.jsx"
 
-export default function Signup() {
+export default function Signin() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -32,13 +33,15 @@ export default function Signup() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      const {token,rest}=data;
       
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         
         return;
       }
-      dispatch(signInSuccess(data));
+      dispatch(setAccesstoken(token));
+      dispatch(signInSuccess(rest));
       navigate('/');
      
     } catch (error) {

@@ -4,6 +4,8 @@ const initialState = {
     currentUser: null,
     error: null,
     loading: false,
+    token:null,
+    
 };
 
 const userSlice = createSlice({
@@ -14,10 +16,17 @@ const userSlice = createSlice({
             state.loading = true;
         },
         signInSuccess: (state, action) => {
+          
             state.currentUser = action.payload;
             state.loading = false;
             state.error = null;
+    
         },
+        setAccesstoken: (state, action) => {
+           state.token=action.payload;
+        },
+        // 
+       
         signInFailure: (state, action) => {
             state.error = action.payload;
             state.loading = false;
@@ -73,6 +82,7 @@ export const {
   signOutUserFailure,
   signOutUserSuccess,
   signOutUserStart,
+  setAccesstoken
 
   } = userSlice.actions;
 
