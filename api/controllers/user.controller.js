@@ -16,6 +16,17 @@ export const updateUser = async (req, res, next) => {
       req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
 
+    if (!req.body.username) {
+      const existingUser = await User.findById(req.params.id);
+      req.body.username = existingUser.username;
+    }
+    if (!req.body.email) {
+      // Assuming you have an existingUser object to get the email
+      const existingUser = await User.findById(req.params.id);
+      if (existingUser) {
+        req.body.email = existingUser.email;
+      } 
+    }
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
