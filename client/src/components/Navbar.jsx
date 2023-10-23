@@ -29,7 +29,7 @@ export default function Navbar() {
               <li className="text-md  text-black border-b-[1px] p-3 w-full">Products</li>
              
               <li className="text-md  text-black w-full">
-              <NavLink to="/sign-in" >
+              <NavLink to="/profile" >
               {currentUser ? (
                 <li className="text-md  text-black  p-3 w-full">Profile</li>
                 
