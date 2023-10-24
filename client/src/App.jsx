@@ -14,6 +14,8 @@ import CreateProduct from "./pages/Admin/CreateProduct.jsx";
 import Users from "./pages/Admin/Users.jsx";
 import Orders from "./pages/user/Orders.jsx";
 import ProfileUser from "./pages/user/Profile.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
  
@@ -40,6 +42,7 @@ export default function App() {
           <Route path="admin/users" element={<Users />} />
         </Route>
       </Routes>
+      <ToastContainer position="top-center"/>
     </BrowserRouter>
   );
 }

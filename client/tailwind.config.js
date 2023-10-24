@@ -13,7 +13,8 @@ export default {
         'custom': 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;',
       },
       screens:{
-        "md-custom":"1023px"
+        "md-custom":"1023px",
+        "sm-custom":"328px",
       }
     },
   },
