@@ -5,6 +5,7 @@ import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.route.js';
 import cookieParser from 'cookie-parser';
 import categoryRoutes from "./routes/category.routes.js";
+import productRoutes from "./routes/product.routes.js";
 dotenv.config();
 
 mongoose
@@ -28,6 +29,7 @@ app.listen(4000, () => {
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use("/api/category", categoryRoutes);
+app.use("/api/product", productRoutes);
 
 
 // error handler
