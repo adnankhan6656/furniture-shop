@@ -4,7 +4,7 @@ import {
   deleteProductController,
   getProductController,
   getSingleProductController,
-  productPhotoController,
+
   updateProductController,
 } from "../controllers/product.controller.js";
 import { isAdmin} from "../utils/isAdmin.js";
@@ -36,10 +36,7 @@ router.get("/get-product", getProductController);
 //single product
 router.get("/get-product/:slug", getSingleProductController);
 
-//get photo
-router.get("/product-photo/:pid", productPhotoController);
-
 //delete rproduct
-router.delete("/product/:pid", deleteProductController);
+router.delete("/delete-product/:pid",verifyToken,isAdmin, deleteProductController);
 
 export default router;

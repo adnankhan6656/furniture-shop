@@ -1,5 +1,5 @@
 import React, { useState ,useEffect,useRef} from 'react'
-import { Link, useLocation ,NavLink,useNavigate} from 'react-router-dom';
+import { Link, useLocation ,NavLink,useNavigate, useParams} from 'react-router-dom';
 import AdminMenu from '../../components/AdminMenu';
 import {useSelector} from "react-redux";
 import {AiOutlineAlignLeft} from "react-icons/ai"
@@ -13,7 +13,7 @@ import {
 } from 'firebase/storage';
 import { app } from '../../firebase';
 
-export default function CreateProduct() {
+export default function UpdateProduct() {
   const{currentUser}=useSelector((state)=>state.user);
   const [categories, setCategories] = useState([]);
   const [isvisible,setIsvisible]=useState(false);
@@ -28,7 +28,69 @@ export default function CreateProduct() {
     quantity:'',
     shipping:''
   });
-  const navigate=useNavigate();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [shipping, setShipping] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [id, setId] = useState("");
+  
+    const navigate=useNavigate();
+    const params=useParams();
+
+    const getSingleProduct = async () => {
+        try {
+          const response = await fetch(`/api/product/get-product/${params.slug}`);
+          if (response.ok) {
+            const data = await response.json();
+            const product = data.product;
+      
+            setId(product._id);
+            setFormData({
+                ...formData,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                quantity: product.quantity,
+                shipping: product.shipping,
+                category: product.category._id,
+                imageUrls:product.imageUrls,
+            });
+          } else {
+            throw new Error("Network response was not ok.");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    // delete a product
+    const handleDelete = async () => {
+        try {
+          let answer = window.prompt("Are You Sure want to delete this product ? ");
+          if (!answer) return;
+      
+          const response = await fetch(`/api/product/delete-product/${id}`, {
+            method: 'DELETE',
+          });
+      
+          if (response.ok) {
+            toast.success("Product Deleted Successfully");
+            navigate("/dashboard/admin/products");
+          } else {
+            throw new Error("Network response was not ok.");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error("Something went wrong");
+        }
+      };
+          
+  useEffect(() => {
+    getSingleProduct();
+    //eslint-disable-next-line
+  }, []);
   const handleChange = (e) => {
    
       setFormData({
@@ -147,23 +209,24 @@ export default function CreateProduct() {
     };
   }, []);
 
-  const handleCreate = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/product/create-product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        const response = await fetch(`/api/product/update-product/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+        
       
       const data = await response.json();
   
       if (data.success==false) {
         toast.error(data.message);
       } else {
-        toast.success("Product Created Successfully");
+        toast.success("Product Updated Successfully");
         navigate("/dashboard/admin/products");
      
       }
@@ -195,7 +258,7 @@ export default function CreateProduct() {
          </div>
       {/* Main Content of Create Product */}
          <div className="max-w-3xl mx-auto p-5 rounded-md bg-white mt-7 mb-10">
-          <h1 className="text-xl  text-center font-semibold mb-4">Create Product</h1>
+          <h1 className="text-xl  text-center font-semibold mb-4">Update Product</h1>
           <div className="flex gap-3">
           <select
                 
@@ -204,10 +267,10 @@ export default function CreateProduct() {
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={handleChange}
               >
-                <option selected>Choose Category</option>
+                <option selected >Choose Category</option>
                 {categories?.map((c) => (
                   
-                  <option key={c._id} value={c._id}>
+                  <option key={c._id} >
                     {c.name}
                   </option>
                 ))}
@@ -222,13 +285,15 @@ export default function CreateProduct() {
                   <option value="1">Yes</option>
                 </select>
           </div>
-          <div className="flex flex-col lg:flex-row gap-4">
-          <form  className="lg:w-1/2 flex flex-col gap-3 mt-3">
+          <div className='flex flex-col lg:flex-row gap-4 '>
+          <form  className=" lg:w-1/2 flex flex-col gap-3 mt-3">
           <input type="text" maxLength='62'
           id='name'
           minLength='10'
           required placeholder='Product Name' className="border rounded-lg p-3 bg-[#f1f1f1] outline-[#0073E1]"
-          onChange={handleChange} />
+          onChange={handleChange}
+          value={formData.name} />
+          
         <textarea
           type='text'
           placeholder=' Product Description'
@@ -236,6 +301,8 @@ export default function CreateProduct() {
           id='description'
           required
           onChange={handleChange}
+          value={formData.description}
+          
         />
        <input
                   type="number"
@@ -243,6 +310,7 @@ export default function CreateProduct() {
                   placeholder="write a Price"
                   className='border p-3 rounded-lg  bg-[#f1f1f1] outline-[#0073E1]'
                   onChange={handleChange}
+                  value={formData.price}
                 />
                 <input
                   type="number"
@@ -250,12 +318,13 @@ export default function CreateProduct() {
                   placeholder="write a quantity"
                   className='border p-3 rounded-lg  bg-[#f1f1f1] outline-[#0073E1]'
                  onChange={handleChange}
+                 value={formData.quantity}
                   
                 />
           </form>
-          <div className="lg:w-1/2  flex flex-col flex-1 gap-4 mt-3">
-          <p className='font-semibold'>Images:
-          <span className='font-normal text-gray-600 ml-2'>The first image will be the cover (max 4)</span>
+          <div className=" lg:w-1/2  flex flex-col flex-1 gap-4 mt-3">
+          <p className='font-semibold '>Images:
+          <p className='font-normal text-gray-600 '>The first image will be the cover (max 4)</p>
           </p>
           <div className="flex gap-4">
             <input className='p-3 border border-gray-300 rounded w-full' type="file" id='images' accept='image/*' onChange={(e) => setFiles(e.target.files)} />
@@ -268,15 +337,15 @@ export default function CreateProduct() {
           </p>
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => (
-              <div
+                <div
                 key={url}
                 className='flex justify-between p-3 border items-center'
-              >
+                >
                 <img
                   src={url}
                   alt='listing image'
                   className='w-20 h-20 object-contain rounded-lg'
-                />
+                  />
                 <button
                   type='button'
                   onClick={() => handleRemoveImage(index)}
@@ -288,12 +357,11 @@ export default function CreateProduct() {
             ))}
             </div>
         </div>
-        <div className="flex justify-center mt-7">
-  <button className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80' onClick={handleCreate}>
-    Create Product
-  </button>
-</div>
+            <div className="flex items-center  justify-center space around space-x-3 mt-6 ">
 
+        <button className='p-3 bg-slate-700 text-white text-sm sm:text-md rounded-lg uppercase hover:opacity-95 disabled:opacity-80' onClick={handleUpdate}>Update Product</button>
+        <button className='p-3 bg-slate-700 text-white text-sm sm:text-md rounded-lg uppercase hover:opacity-95 disabled:opacity-80' onClick={handleDelete}>Delete Product</button>
+            </div>
               
               
          </div>

@@ -43,6 +43,17 @@ export default function AdminMenu({ closeSidebar }) {
 
                 </NavLink>
 
+                <NavLink
+                    to="/dashboard/admin/products"
+                    className={`flex items-center gap-2 p-3 hover:bg-[#21243b] ${
+                        location.pathname.includes('products') ? 'bg-[#21243b]' : ''
+                      }`}
+                      onClick={closeSidebar}
+                >
+                    <BsFillBoxFill className="w-6 h-6" />
+                    <p className='text-md' >All Products</p>
+
+                </NavLink>
             </ul>
         </div>
     )

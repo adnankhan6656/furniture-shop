@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import {  useSelector } from 'react-redux';
 import SignUp from './pages/Signup';
-import Products from './pages/Products';
+import Products from './pages/Products.jsx';
 import Profile from './pages/Profile';
 import Signin from './pages/Signin';
 import PrivateRoute from './components/PrivateRoute.jsx';
@@ -11,12 +11,13 @@ import AdminRoute from "./components/Routes/AdminRoute.jsx";
 import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
 import CreateCategory from "./pages/Admin/CreateCategory.jsx";
 import CreateProduct from "./pages/Admin/CreateProduct.jsx";
+import UpdateProduct from './pages/Admin/UpdateProduct';
 import Users from "./pages/Admin/Users.jsx";
 import Orders from "./pages/user/Orders.jsx";
 import ProfileUser from "./pages/user/Profile.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import AdminProducts from './pages/Admin/AdminProducts';
 export default function App() {
  
   return (
@@ -34,6 +35,8 @@ export default function App() {
           <Route path="user" element={<Dashboard />} />
           <Route path="user/orders" element={<Orders />} />
           <Route path="user/profile" element={<ProfileUser />} />
+          <Route path="admin/products" element={<AdminProducts/>} />
+          <Route path="admin/product/:slug" element={<UpdateProduct />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
